@@ -4,32 +4,33 @@ export async function generateChallanNumber(): Promise<string> {
   const currentYear = new Date().getFullYear();
   const yearPrefix = `CH-${currentYear}-`;
 
-  // Query highest sequence number for current year prefix
-  const latestChallan = await prisma.salesChallan.findFirst({
+  // Fetch all challan numbers for the current year
+  const yearChallans = await prisma.salesChallan.findMany({
     where: {
       challanNumber: {
         startsWith: yearPrefix,
       },
-    },
-    orderBy: {
-      challanNumber: 'desc',
     },
     select: {
       challanNumber: true,
     },
   });
 
-  let nextSequence = 1;
-  if (latestChallan && latestChallan.challanNumber) {
-    const parts = latestChallan.challanNumber.split('-');
-    if (parts.length === 3) {
-      const lastSeq = parseInt(parts[2], 10);
-      if (!isNaN(lastSeq)) {
-        nextSequence = lastSeq + 1;
+  let maxSequence = 0;
+
+  for (const c of yearChallans) {
+    if (c.challanNumber) {
+      const parts = c.challanNumber.split('-');
+      if (parts.length === 3) {
+        const seq = parseInt(parts[2], 10);
+        if (!isNaN(seq) && seq > maxSequence) {
+          maxSequence = seq;
+        }
       }
     }
   }
 
+  const nextSequence = maxSequence + 1;
   const paddedSequence = String(nextSequence).padStart(5, '0');
   return `${yearPrefix}${paddedSequence}`;
 }
