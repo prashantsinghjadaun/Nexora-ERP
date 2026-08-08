@@ -57,6 +57,23 @@ export class UnprocessableEntityError extends AppError {
   }
 }
 
+export class InsufficientStockError extends AppError {
+  constructor(
+    details?: ApiErrorDetail[],
+    message = 'One or more products have insufficient inventory to confirm this challan.'
+  ) {
+    super(422, 'INSUFFICIENT_STOCK', message, details);
+  }
+}
+
+export class CannotCancelConfirmedChallanError extends AppError {
+  constructor(
+    message = 'Confirmed sales challans cannot be cancelled because inventory has already been deducted and stock movements logged.'
+  ) {
+    super(422, 'CANNOT_CANCEL_CONFIRMED_CHALLAN', message);
+  }
+}
+
 export class InternalServerError extends AppError {
   constructor(message = 'Internal Server Error', details?: ApiErrorDetail[]) {
     super(500, 'INTERNAL_SERVER_ERROR', message, details);
