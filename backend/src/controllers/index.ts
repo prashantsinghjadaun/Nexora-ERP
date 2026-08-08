@@ -1,2 +1,1 @@
-// Placeholder for controllers module exports
-export {};
+export * from './auth.controller';

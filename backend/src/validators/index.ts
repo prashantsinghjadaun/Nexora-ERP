@@ -1,2 +1,1 @@
-// Placeholder for validators module exports
-export {};
+export * from './auth.validator';

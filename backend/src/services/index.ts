@@ -1,2 +1,1 @@
-// Placeholder for services module exports
-export {};
+export * from './auth.service';
