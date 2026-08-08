@@ -11,10 +11,15 @@ interface AppLayoutProps {
 
 export const AppLayout: React.FC<AppLayoutProps> = ({ children, currentPath, title }) => {
   const { user, logout } = useAuth();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   return (
     <div className="app-shell">
+      {/* Mobile Backdrop */}
+      {sidebarOpen && (
+        <div className="sidebar-backdrop" onClick={() => setSidebarOpen(false)} />
+      )}
+
       <Sidebar currentPath={currentPath} isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <div className="main-content">
@@ -23,11 +28,12 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children, currentPath, tit
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
               className="btn btn-secondary"
-              style={{ padding: '0.4rem', display: 'flex', alignItems: 'center' }}
+              title="Toggle Navigation Sidebar"
+              style={{ padding: '0.45rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
               <Menu size={20} />
             </button>
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#f8fafc' }}>{title}</h2>
+            <h2 style={{ fontSize: '1.2rem', fontWeight: 600, color: '#f8fafc' }}>{title}</h2>
           </div>
 
           {user && (

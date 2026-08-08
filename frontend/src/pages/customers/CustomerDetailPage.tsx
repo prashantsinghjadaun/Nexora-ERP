@@ -54,6 +54,7 @@ export const CustomerDetailPage: React.FC<{ customerId: string }> = ({ customerI
         method: 'POST',
         body: JSON.stringify({
           notes: followUpNotes.trim(),
+          followUpDate: new Date().toISOString(),
           nextFollowUpDate: nextDate ? new Date(nextDate).toISOString() : undefined,
         }),
       });
@@ -82,6 +83,7 @@ export const CustomerDetailPage: React.FC<{ customerId: string }> = ({ customerI
           businessName: editData.businessName || undefined,
           gstNumber: editData.gstNumber || undefined,
           type: editData.type,
+          status: editData.status,
           address: editData.address || undefined,
           notes: editData.notes || undefined,
         }),
@@ -307,6 +309,34 @@ export const CustomerDetailPage: React.FC<{ customerId: string }> = ({ customerI
                     value={editData.businessName || ''}
                     onChange={(e) => setEditData({ ...editData, businessName: e.target.value })}
                   />
+                </div>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                <div className="form-group">
+                  <label className="form-label">Customer Type</label>
+                  <select
+                    className="input-field"
+                    value={editData.type || 'RETAIL'}
+                    onChange={(e) => setEditData({ ...editData, type: e.target.value as any })}
+                  >
+                    <option value="RETAIL">Retail</option>
+                    <option value="WHOLESALE">Wholesale</option>
+                    <option value="DISTRIBUTOR">Distributor</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">Account Status</label>
+                  <select
+                    className="input-field"
+                    value={editData.status || 'ACTIVE'}
+                    onChange={(e) => setEditData({ ...editData, status: e.target.value as any })}
+                  >
+                    <option value="LEAD">Lead</option>
+                    <option value="ACTIVE">Active</option>
+                    <option value="INACTIVE">Inactive</option>
+                  </select>
                 </div>
               </div>
 

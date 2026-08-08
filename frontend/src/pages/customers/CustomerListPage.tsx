@@ -29,6 +29,7 @@ export const CustomerListPage: React.FC = () => {
     businessName: '',
     gstNumber: '',
     type: 'RETAIL' as CustomerType,
+    status: 'ACTIVE' as const,
     address: '',
     notes: '',
   });
@@ -80,13 +81,14 @@ export const CustomerListPage: React.FC = () => {
           businessName: formData.businessName.trim() || undefined,
           gstNumber: formData.gstNumber.trim() || undefined,
           type: formData.type,
+          status: formData.status,
           address: formData.address.trim() || undefined,
           notes: formData.notes.trim() || undefined,
         }),
       });
 
       setShowCreateModal(false);
-      setFormData({ name: '', mobile: '', email: '', businessName: '', gstNumber: '', type: 'RETAIL', address: '', notes: '' });
+      setFormData({ name: '', mobile: '', email: '', businessName: '', gstNumber: '', type: 'RETAIL', status: 'ACTIVE', address: '', notes: '' });
       fetchCustomers();
     } catch (err: unknown) {
       if (err instanceof Error) setModalError(err.message);
@@ -308,7 +310,7 @@ export const CustomerListPage: React.FC = () => {
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
                 <div className="form-group">
                   <label className="form-label">Customer Type</label>
                   <select
@@ -319,6 +321,19 @@ export const CustomerListPage: React.FC = () => {
                     <option value="RETAIL">Retail</option>
                     <option value="WHOLESALE">Wholesale</option>
                     <option value="DISTRIBUTOR">Distributor</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">Initial Status</label>
+                  <select
+                    className="input-field"
+                    value={formData.status}
+                    onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
+                  >
+                    <option value="LEAD">Lead</option>
+                    <option value="ACTIVE">Active</option>
+                    <option value="INACTIVE">Inactive</option>
                   </select>
                 </div>
 

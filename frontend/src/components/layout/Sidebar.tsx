@@ -57,7 +57,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPath, isOpen, onClose }
   const filteredNav = navItems.filter((item) => item.roles.includes(role));
 
   return (
-    <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
+    <aside className={`sidebar ${isOpen ? 'open' : 'collapsed'}`}>
       <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
         <div style={{ background: 'linear-gradient(135deg, #38bdf8, #6366f1)', padding: '0.5rem', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <Boxes size={22} style={{ color: '#090d16' }} />

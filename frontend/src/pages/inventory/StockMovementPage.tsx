@@ -50,6 +50,13 @@ export const StockMovementPage: React.FC = () => {
     try {
       const res = await apiRequest<Product[]>('/products?limit=100');
       setProducts(res.data);
+      const urlParams = new URLSearchParams(window.location.search);
+      const prodId = urlParams.get('productId');
+      if (prodId) {
+        setSelectedProductId(prodId);
+      } else if (res.data.length > 0 && !selectedProductId) {
+        setSelectedProductId(res.data[0].id);
+      }
     } catch {
       setProducts([]);
     }
@@ -57,10 +64,6 @@ export const StockMovementPage: React.FC = () => {
 
   useEffect(() => {
     fetchProducts();
-    // Parse URL query parameter if present
-    const urlParams = new URLSearchParams(window.location.search);
-    const prodId = urlParams.get('productId');
-    if (prodId) setSelectedProductId(prodId);
   }, []);
 
   useEffect(() => {

@@ -7,10 +7,14 @@ import { errorMiddleware } from './middleware/error.middleware';
 
 const app: Express = express();
 
+const allowedOrigins = config.CORS_ORIGIN.split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
 // CORS Configuration
 app.use(
   cors({
-    origin: config.CORS_ORIGIN,
+    origin: allowedOrigins.length === 1 ? allowedOrigins[0] : allowedOrigins,
     credentials: true,
   })
 );

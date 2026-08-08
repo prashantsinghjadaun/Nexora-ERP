@@ -461,14 +461,25 @@ export const ProductListPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="form-group">
-                <label className="form-label">Warehouse Location</label>
-                <input
-                  type="text"
-                  className="input-field"
-                  value={editProduct.location}
-                  onChange={(e) => setEditProduct({ ...editProduct, location: e.target.value })}
-                />
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                <div className="form-group">
+                  <label className="form-label">Category</label>
+                  <input
+                    type="text"
+                    className="input-field"
+                    value={editProduct.category}
+                    onChange={(e) => setEditProduct({ ...editProduct, category: e.target.value })}
+                  />
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Warehouse Location</label>
+                  <input
+                    type="text"
+                    className="input-field"
+                    value={editProduct.location}
+                    onChange={(e) => setEditProduct({ ...editProduct, location: e.target.value })}
+                  />
+                </div>
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '1.5rem' }}>
