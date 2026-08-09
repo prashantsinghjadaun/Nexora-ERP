@@ -19,9 +19,12 @@ app.use(
   })
 );
 
-// Body Parsing Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Security Hardening: Disable X-Powered-By Header
+app.disable('x-powered-by');
+
+// Body Parsing Middleware with size limits
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Register API Routes
 app.use('/api/v1', apiRouter);
